@@ -50,6 +50,8 @@ class RAGState(TypedDict):
     answer: str
 
 load_dotenv()
+app = FastAPI()
+
 
 INDEX_NAME = os.environ["PINECONE_INDEX"]
 
