@@ -41,7 +41,7 @@ from langgraph.graph.message import MessagesState
 
 from langgraph.graph import StateGraph, START, END
 from typing import TypedDict
-
+from fastapi.middleware.cors import CORSMiddleware
 
 class RAGState(TypedDict):
     question: str
@@ -50,7 +50,10 @@ class RAGState(TypedDict):
     answer: str
 
 load_dotenv()
-app = FastAPI()
+# app = FastAPI()
+
+
+
 
 
 INDEX_NAME = os.environ["PINECONE_INDEX"]
@@ -69,6 +72,18 @@ app = FastAPI(
     title="Medical API",
     description="RAG application using LangGraph, Groq and Pinecone",
     version="1.0.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+        "https://aisysassist.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # =====================================
